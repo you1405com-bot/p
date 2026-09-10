@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرتقال - اولین هوش مصنوعی آفلاین ایران</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
+
+        :root {
+            --orange-primary: #FF6B00;
+            --orange-light: #FF8C33;
+            --orange-dark: #CC5500;
+            --orange-glow: rgba(255, 107, 0, 0.3);
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-color: rgba(255, 107, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 0, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .floating-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--orange-primary);
+            top: 10%;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #ff4444;
+            bottom: 20%;
+            left: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: #ffaa00;
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 30px) scale(1.05); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px var(--orange-glow);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--orange-primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange-primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 107, 0, 0.1);
+            border: 1px solid var(--border-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--orange-light);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--orange-primary);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--orange-primary), #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
+            color: white;
+            box-shadow: 0 8px 30px var(--orange-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 107, 0, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 40px;
+            margin-top: -40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--orange-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .section {
+            padding: 100px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 .highlight {
+            background: linear-gradient(135deg, var(--orange-primary), #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange-primary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 107, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 30px var(--orange-glow);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.05));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.9;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            padding: 6px 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li::before {
+            content: '◆';
+            color: var(--orange-primary);
+            font-size: 0.7rem;
+        }
+
+        .models-section {
+            background: linear-gradient(180deg, transparent, rgba(255, 107, 0, 0.03), transparent);
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .model-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .model-card.featured {
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 40px var(--orange-glow);
+        }
+
+        .model-card.featured::after {
+            content: '⭐ مدل اختصاصی پرتقال';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .model-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .model-size {
+            color: var(--orange-primary);
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .model-volume {
+            color: var(--orange-light);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .model-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .model-badge {
+            display: inline-block;
+            background: rgba(255, 107, 0, 0.1);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            color: var(--orange-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        .architecture {
+            padding: 100px 40px;
+        }
+
+        .arch-diagram {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 50px;
+            position: relative;
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .arch-layer:hover {
+            transform: scale(1.02);
+        }
+
+        .arch-layer-1 {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.05));
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            color: var(--orange-light);
+        }
+
+        .arch-layer-2 {
+            background: linear-gradient(135deg, rgba(100, 200, 255, 0.1), rgba(100, 200, 255, 0.02));
+            border: 1px solid rgba(100, 200, 255, 0.2);
+            color: #64c8ff;
+        }
+
+        .arch-layer-3 {
+            background: linear-gradient(135deg, rgba(100, 255, 150, 0.1), rgba(100, 255, 150, 0.02));
+            border: 1px solid rgba(100, 255, 150, 0.2);
+            color: #64ff96;
+        }
+
+        .arch-layer-4 {
+            background: linear-gradient(135deg, rgba(200, 100, 255, 0.1), rgba(200, 100, 255, 0.02));
+            border: 1px solid rgba(200, 100, 255, 0.2);
+            color: #c864ff;
+        }
+
+        .arch-arrow {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+
+        .pricing-section {
+            background: linear-gradient(180deg, transparent, rgba(255, 107, 0, 0.02), transparent);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange-primary);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--orange-primary);
+            position: relative;
+            box-shadow: 0 0 30px var(--orange-glow);
+        }
+
+        .pricing-amount {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--orange-primary);
+            margin: 15px 0;
+        }
+
+        .pricing-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .pricing-coins {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 100px 40px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(255, 107, 0, 0.02));
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 0, 0.05) 0%, transparent 60%);
+        }
+
+        .cta-box h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--orange-primary);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--orange-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .header-content {
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .stats {
+                gap: 30px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--orange-dark);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--orange-primary);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tool-item {
+            background: rgba(255, 107, 0, 0.05);
+            border: 1px solid rgba(255, 107, 0, 0.15);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tool-item:hover {
+            background: rgba(255, 107, 0, 0.1);
+            border-color: rgba(255, 107, 0, 0.3);
+            color: var(--text-primary);
+        }
+
+        .tool-item span {
+            font-size: 1.2rem;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.08), rgba(255, 107, 0, 0.02));
+            border: 1px solid rgba(255, 107, 0, 0.25);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.15);
+        }
+
+        .highlight-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .highlight-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--orange-light);
+        }
+
+        .highlight-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .why-offline {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 60px;
+        }
+
+        .why-offline h3 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .why-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .why-item .icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .why-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .why-item p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🍊</div>
+                <span class="logo-text">پرتقال</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">قابلیت‌ها</a></li>
+                    <li><a href="#models">مدل‌ها</a></li>
+                    <li><a href="#architecture">معماری</a></li>
+                    <li><a href="#tools">ابزارها</a></li>
+                    <li><a href="#why">چرا آفلاین؟</a></li>
+                    <li><a href="#download">دانلود</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                اولین هوش مصنوعی آفلاین ایران با مدل اختصاصی
+            </div>
+            <h1>
+                هوش مصنوعی <span class="highlight">پرتقال</span>
+                <br>قدرت AI در دستان شما
+            </h1>
+            <p>
+                اولین دستیار هوشمند کاملاً آفلاین ایرانی با مدل زبانی اختصاصی <strong>PortaghalIR-3</strong>. بدون نیاز به اینترنت، بدون نگرانی از حریم خصوصی. تمام قدرت هوش مصنوعی روی گوشی شما، فقط با ۲ مگابایت!
+            </p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">🍊 دانلود رایگان</a>
+                <a href="#features" class="btn btn-secondary">مشاهده قابلیت‌ها</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">۱۰۰٪</div>
+            <div class="stat-label">آفلاین و بدون اینترنت</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">۲MB</div>
+            <div class="stat-label">حجم مدل اختصاصی</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">۲۰+</div>
+            <div class="stat-label">ابزار کنترلی دستگاه</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">۰</div>
+            <div class="stat-label">ارسال داده به سرور</div>
+        </div>
+    </div>
+
+    <!-- Highlights Section -->
+    <section class="section">
+        <div class="section-header reveal">
+            <h2>چرا <span class="highlight">پرتقال</span> متفاوت است؟</h2>
+            <p>ویژگی‌هایی که ما را از بقیه متمایز می‌کند</p>
+        </div>
+
+        <div class="highlights reveal">
+            <div class="highlight-card">
+                <div class="icon">🪶</div>
+                <h4>فوق‌العاده سبک</h4>
+                <p>مدل اختصاصی پرتقال فقط ۲ مگابایت حجم دارد! بدون اشغال فضای گوشی</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">⚡</div>
+                <h4>پاسخ آنی</h4>
+                <p>بدون انتظار برای سرور، پاسخ‌دهی در کسری از ثانیه</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">🔒</div>
+                <h4>حریم خصوصی مطلق</h4>
+                <p>هیچ داده‌ای از گوشی شما خارج نمی‌شود. همه چیز محلی است</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">🇮🇷</div>
+                <h4>مدل کاملاً ایرانی</h4>
+                <p>مدل PortaghalIR-3 به‌صورت اختصاصی برای زبان فارسی بهینه شده</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">📴</div>
+                <h4>کار بدون اینترنت</h4>
+                <p>در هواپیما، مترو، یا هر جای بدون آنتن‌دهی هم کار می‌کند</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">🔋</div>
+                <h4>مصرف باتری بهینه</h4>
+                <p>به‌لطف مدل سبک، مصرف باتری بسیار کمتر از رقبا</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="section-header reveal">
+            <h2>قابلیت‌های <span class="highlight">شگفت‌انگیز</span></h2>
+            <p>مجموعه‌ای کامل از ابزارها و قابلیت‌ها برای تجربه‌ای بی‌نظیر از هوش مصنوعی</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">🧠</div>
+                <h3>مدیریت مدل‌های زبانی</h3>
+                <p>بارگذاری و مدیریت مدل‌های مختلف زبانی با قابلیت دانلود هوشمند.</p>
+                <ul class="feature-list">
+                    <li>مدل اختصاصی PortaghalIR-3 4B (فقط ۲ مگابایت!)</li>
+                    <li>مدل Gemma-2 2B IT (دقت بالاتر)</li>
+                    <li>دانلود موازی چندبخشی با ادامه‌ی دانلود</li>
+                    <li>حفظ تاریخچه‌ی مکالمات با شناسه‌ی جداگانه</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔧</div>
+                <h3>فراخوانی ابزار (Tool Calling)</h3>
+                <p>مدل هوشمند می‌تواند ابزارهای دستگاه شما را مستقیماً کنترل کند.</p>
+                <ul class="feature-list">
+                    <li>کنترل وای‌فای و بلوتوث</li>
+                    <li>مدیریت تنظیمات سیستم</li>
+                    <li>خواندن و ارسال اعلان‌ها</li>
+                    <li>کنترل سخت‌افزار (باتری، فلش، صدا)</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">♿</div>
+                <h3>دسترسی‌پذیری پیشرفته</h3>
+                <p>کنترل کامل دستگاه از طریق سرویس Accessibility.</p>
+                <ul class="feature-list">
+                    <li>خواندن متن صفحه</li>
+                    <li>کلیک و تایپ خودکار</li>
+                    <li>اسکرول و ناوبری</li>
+                    <li>باز کردن اپلیکیشن‌ها</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">🌐</div>
+                <h3>سرور محلی HTTP</h3>
+                <p>ارتباط با دستگاه‌های دیگر از طریق سرور داخلی روی پورت ۸۵۰۰.</p>
+                <ul class="feature-list">
+                    <li>پشتیبانی از SSE (ارسال تکه‌تکه)</li>
+                    <li>مدیریت دستگاه‌های متصل</li>
+                    <li>اجرا به‌عنوان سرویس پیش‌زمینه</li>
+                    <li>اتصال از طریق مرورگر</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">📡</div>
+                <h3>هات‌اسپات محلی</h3>
+                <p>ایجاد شبکه‌ی محلی برای اتصال دستگاه‌ها بدون نیاز به روتر.</p>
+                <ul class="feature-list">
+                    <li>راه‌اندازی آسان هات‌اسپات</li>
+                    <li>اشتراک‌گذاری اینترنت</li>
+                    <li>اتصال مستقیم دستگاه‌ها</li>
+                    <li>بدون نیاز به اینترنت خارجی</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">🎙️</div>
+                <h3>ورودی صوتی و گفتار</h3>
+                <p>تعامل صوتی کامل با پشتیبانی از زبان فارسی.</p>
+                <ul class="feature-list">
+                    <li>تبدیل گفتار به متن (STT)</li>
+                    <li>تبدیل متن به گفتار (TTS)</li>
+                    <li>پشتیبانی کامل از فارسی</li>
+                    <li>صدای طبیعی و روان</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">📸</div>
+                <h3>اسکرین‌شات هوشمند</h3>
+                <p>گرفتن اسکرین‌شات از صفحه و تحلیل محتوای آن توسط مدل.</p>
+                <ul class="feature-list">
+                    <li>ضبط صفحه با MediaProjection</li>
+                    <li>خروجی PNG با Base64</li>
+                    <li>تحلیل خودکار محتوا</li>
+                    <li>اشتراک‌گذاری آسان</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">📎</div>
+                <h3>مدیریت فایل‌های پیوست</h3>
+                <p>امکان پیوست فایل و استفاده از سیستم RAG برای فایل‌های حجیم.</p>
+                <ul class="feature-list">
+                    <li>پشتیبانی از TXT, MD, JSON, CSV</li>
+                    <li>پشتیبانی از فایل‌های DOCX</li>
+                    <li>سیستم RAG برای فایل‌های بزرگ</li>
+                    <li>استخراج هوشمند بخش‌های مرتبط</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔒</div>
+                <h3>امنیت و حریم خصوصی</h3>
+                <p>تمام پردازش‌ها روی دستگاه شما انجام می‌شود.</p>
+                <ul class="feature-list">
+                    <li>توکن امنیتی برای WebView</li>
+                    <li>بدون ارسال داده به سرور</li>
+                    <li>اعتبارسنجی تمام درخواست‌ها</li>
+                    <li>رمزنگاری ارتباطات داخلی</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">💰</div>
+                <h3>پرداخت درون‌برنامه‌ای</h3>
+                <p>سیستم سکه و اشتراک با پشتیبانی از فروشگاه مایکت.</p>
+                <ul class="feature-list">
+                    <li>۱۰ سکه‌ی رایگان روزانه (انقضای ۴۸ ساعت)</li>
+                    <li>بسته‌های ۲۰، ۴۰، ۱۰۰ و ۳۰۰ سکه‌ای</li>
+                    <li>اشتراک ماهانه ویژه</li>
+                    <li>پرداخت امن از طریق مایکت</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">🎨</div>
+                <h3>رابط کاربری مدرن</h3>
+                <p>طراحی زیبا و کاربرپسند مبتنی بر WebView.</p>
+                <ul class="feature-list">
+                    <li>رابط کاربری تحت وب</li>
+                    <li>ارتباط دوطرفه با JavascriptInterface</li>
+                    <li>انیمیشن‌های روان</li>
+                    <li>طراحی واکنش‌گرا (Responsive)</li>
+                </ul>
+            </div>
+
+            <div class="feature-card reveal">
+                <div class="feature-icon">⚡</div>
+                <h3>مدیریت دانلود هوشمند</h3>
+                <p>دانلود بهینه‌ی مدل‌ها با قابلیت ادامه و مدیریت فضا.</p>
+                <ul class="feature-list">
+                    <li>دانلود موازی چندبخشی</li>
+                    <li>ادامه‌ی دانلود از نقطه‌ی توقف</li>
+                    <li>بررسی فضای ذخیره‌سازی</li>
+                    <li>امکان لغو دانلود</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section class="section models-section" id="models">
+        <div class="section-header reveal">
+            <h2>مدل‌های <span class="highlight">زبانی</span></h2>
+            <p>انتخاب مدل مناسب برای نیاز شما</p>
+        </div>
+
+        <div class="models-grid">
+            <div class="model-card featured reveal">
+                <div class="model-name">PortaghalIR-3</div>
+                <div class="model-size">4B</div>
+                <div class="model-volume">📦 حجم: فقط ۲ مگابایت</div>
+                <div class="model-desc">
+                    مدل اختصاصی پرتقال، بهینه‌شده برای زبان فارسی. فوق‌العاده سبک و سریع با قابلیت فراخوانی ابزار. مناسب برای تمام دستگاه‌ها حتی با حافظه‌ی محدود.
+                </div>
+                <div class="model-badge">🇮🇷 ساخت ایران</div>
+            </div>
+            <div class="model-card reveal">
+                <div class="model-name">Gemma-2 2B IT</div>
+                <div class="model-size">2B</div>
+                <div class="model-volume">📦 حجم: حدود ۱.۵ گیگابایت</div>
+                <div class="model-desc">
+                    مدل دقیق‌تر با قابلیت‌های پیشرفته‌تر. مناسب برای وظایف پیچیده‌تر و درک عمیق‌تر متن. نیازمند فضای ذخیره‌سازی بیشتر.
+                </div>
+                <div class="model-badge">🌐 مدل بین‌المللی</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Offline Section -->
+    <section class="section" id="why">
+        <div class="section-header reveal">
+            <h2>چرا <span class="highlight">آفلاین</span>؟</h2>
+            <p>مزایای هوش مصنوعی محلی در مقابل سرویس‌های ابری</p>
+        </div>
+
+        <div class="why-offline reveal">
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="icon">🔐</div>
+                    <div>
+                        <h4>حریم خصوصی کامل</h4>
+                        <p>مکالمات شما هرگز به سرور ارسال نمی‌شوند. اطلاعات شخصی شما کاملاً امن می‌ماند.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="icon">🚀</div>
+                    <div>
+                        <h4>سرعت بدون تأخیر</h4>
+                        <p>بدون نیاز به ارتباط با سرور، پاسخ‌دهی آنی و بدون انتظار.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="icon">📴</div>
+                    <div>
+                        <h4>بدون نیاز به اینترنت</h4>
+                        <p>در مترو، هواپیما، یا مناطق بدون پوشش شبکه هم به‌راحتی کار می‌کند.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="icon">💸</div>
+                    <div>
+                        <h4>بدون هزینه‌ی پنهان</h4>
+                        <p>نیازی به اشتراک ماهانه‌ی سرویس‌های خارجی و پرداخت ارزی نیست.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="icon">🇮🇷</div>
+                    <div>
+                        <h4>بدون تحریم</h4>
+                        <p>هیچ‌وقت نگران قطع دسترسی به‌دلیل تحریم‌ها نباشید.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="icon">♾️</div>
+                    <div>
+                        <h4>استفاده‌ی نامحدود</h4>
+                        <p>بدون محدودیت تعداد درخواست در روز یا ماه. هر چقدر بخواهید استفاده کنید.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="section" id="tools">
+        <div class="section-header reveal">
+            <h2>ابزارهای <span class="highlight">کنترلی</span></h2>
+            <p>بیش از ۲۰ ابزار برای کنترل کامل دستگاه</p>
+        </div>
+
+        <div class="tools-grid reveal">
+            <div class="tool-item"><span>📶</span> وای‌فای</div>
+            <div class="tool-item"><span>📳</span> بلوتوث</div>
+            <div class="tool-item"><span>✈️</span> حالت پرواز</div>
+            <div class="tool-item"><span>🔕</span> مزاحم نشوید</div>
+            <div class="tool-item"><span>🔔</span> اعلان‌ها</div>
+            <div class="tool-item"><span>🔋</span> باتری</div>
+            <div class="tool-item"><span>🔦</span> چراغ‌قوه</div>
+            <div class="tool-item"><span>📳</span> ویبره</div>
+            <div class="tool-item"><span>☀️</span> روشنایی صفحه</div>
+            <div class="tool-item"><span>🔊</span> کنترل صدا</div>
+            <div class="tool-item"><span>📋</span> کلیپ‌بورد</div>
+            <div class="tool-item"><span>🔗</span> اشتراک‌گذاری</div>
+            <div class="tool-item"><span>🌍</span> مرورگر</div>
+            <div class="tool-item"><span>🧮</span> ماشین‌حساب</div>
+            <div class="tool-item"><span>👆</span> کلیک خودکار</div>
+            <div class="tool-item"><span>⌨️</span> تایپ خودکار</div>
+            <div class="tool-item"><span>📜</span> اسکرول</div>
+            <div class="tool-item"><span>🏠</span> دکمه خانه</div>
+            <div class="tool-item"><span>↩️</span> بازگشت</div>
+            <div class="tool-item"><span>📱</span> لیست برنامه‌ها</div>
+            <div class="tool-item"><span>📸</span> اسکرین‌شات</div>
+            <div class="tool-item"><span>📂</span> مدیریت فایل</div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="architecture" id="architecture">
+        <div class="section-header reveal">
+            <h2>معماری <span class="highlight">سیستم</span></h2>
+            <p>ساختار فنی پرتقال AI</p>
+        </div>
+
+        <div class="arch-diagram reveal">
+            <div class="arch-layer arch-layer-1">
+                🎨 رابط کاربری (WebView + HTML/CSS/JS)
+            </div>
+            <div class="arch-arrow">⬇️</div>
+            <div class="arch-layer arch-layer-2">
+                🌉 پل ارتباطی (JavascriptInterface - WebBridge)
+            </div>
+            <div class="arch-arrow">⬇️</div>
+            <div class="arch-layer arch-layer-3">
+                🧠 موتور هوش مصنوعی (PortaghalIR-3 + Tool Calling)
+            </div>
+            <div class="arch-arrow">⬇️</div>
+            <div class="arch-layer arch-layer-4">
+                📱 سرویس‌های دستگاه (Hardware + System APIs)
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing-section">
+        <div class="section-header reveal">
+            <h2>بسته‌های <span class="highlight">سکه</span></h2>
+            <p>هر روز ۱۰ سکه رایگان دریافت کنید! (با انقضای ۴۸ ساعت)</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card reveal">
+                <div class="pricing-label">بسته‌ی شروع</div>
+                <div class="pricing-amount">۲۰</div>
+                <div class="pricing-coins">سکه</div>
+            </div>
+            <div class="pricing-card reveal">
+                <div class="pricing-label">بسته‌ی متوسط</div>
+                <div class="pricing-amount">۴۰</div>
+                <div class="pricing-coins">سکه</div>
+            </div>
+            <div class="pricing-card popular reveal">
+                <div class="pricing-label">بسته‌ی حرفه‌ای</div>
+                <div class="pricing-amount">۱۰۰</div>
+                <div class="pricing-coins">سکه</div>
+            </div>
+            <div class="pricing-card reveal">
+                <div class="pricing-label">بسته‌ی ویژه</div>
+                <div class="pricing-amount">۳۰۰</div>
+                <div class="pricing-coins">سکه</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="download">
+        <div class="cta-box reveal">
+            <h2>همین الان <span class="highlight">پرتقال</span> را دانلود کنید!</h2>
+            <p>اولین هوش مصنوعی آفلاین ایران با مدل اختصاصی ۲ مگابایتی، کاملاً رایگان برای شروع</p>
+            <a href="#" class="btn btn-primary" style="position: relative;">🍊 دانلود از مایکت</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🍊 پرتقال AI</h4>
+                <p>اولین هوش مصنوعی آفلاین ایران با مدل زبانی اختصاصی PortaghalIR-3. قدرت هوش مصنوعی بدون نیاز به اینترنت، فقط با ۲ مگابایت.</p>
+            </div>
+            <div class="footer-section">
+                <h4>دسترسی سریع</h4>
+                <a href="#features">قابلیت‌ها</a>
+                <a href="#models">مدل‌های زبانی</a>
+                <a href="#tools">ابزارها</a>
+                <a href="#why">چرا آفلاین؟</a>
+            </div>
+            <div class="footer-section">
+                <h4>پشتیبانی</h4>
+                <a href="#">راهنمای استفاده</a>
+                <a href="#">سوالات متداول</a>
+                <a href="#">تماس با ما</a>
+                <a href="#">گزارش مشکل</a>
+            </div>
+            <div class="footer-section">
+                <h4>ارتباط با ما</h4>
+                <p>📧 info@porteghal.ai</p>
+                <p>🌐 porteghal.ai</p>
+                <p>📱 کانال تلگرام</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© ۱۴۰۳ پرتقال AI - تمامی حقوق محفوظ است. ساخته شده با ❤️ در ایران</p>
+        </div>
+    </footer>
+
+    <script>
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 15, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 10, 15, 0.85)';
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.floating-orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 20;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
