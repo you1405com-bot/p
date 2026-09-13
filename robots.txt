@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://you1405com-bot.github.io/p/sitemap.xml
